@@ -1,0 +1,92 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+const int MAX = 5;
+
+// calculates total and averagess
+void calculateStudent(int i, double Score[][3], double &total, double &average)
+{
+    total = 0;
+
+    for (int j = 0; j < 3; j++)
+    {
+        total += Score[i][j];
+    }
+
+    average = total / 3.0;
+}
+
+//  displays all students
+void displayAll(int n, string NameArr[], double Score[][3])
+{
+    cout << fixed << setprecision(2);
+    cout << "== Student Grade Report ===" << endl;
+
+    for (int i = 0; i < n; i++)
+    {
+        double total, average;
+
+        calculateStudent(i, Score, total, average);
+
+        cout << NameArr[i]
+             << " | Math = " << Score[i][0]
+             << " | C Programming = " << Score[i][1]
+             << " | Operating Systems = " << Score[i][2]
+             << " | Total = " << total
+             << " | Average = " << average
+             << endl;
+    }
+}
+
+// to find top student
+int findTopStudent(int n, double Score[][3])
+{
+    int topIndex = 0;
+    double maxTotal = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        double total, average;
+
+        calculateStudent(i, Score, total, average);
+
+        if (i == 0 || total > maxTotal)
+        {
+            maxTotal = total;
+            topIndex = i;
+        }
+    }
+
+    return topIndex;
+}
+
+int main()
+{
+    int n = 3;
+
+    string NameArr[MAX] = {"Alice", "Bob", "Carl"};
+
+    double Score[MAX][3] = {
+        {90, 85, 95},
+        {70, 80, 75},
+        {88, 92, 84}
+    };
+
+    displayAll(n, NameArr, Score);
+
+    int topIndex = findTopStudent(n, Score);
+
+    double total, average;
+
+    calculateStudent(topIndex, Score, total, average);
+
+    cout << endl;
+    cout << "Top student: " << NameArr[topIndex]
+         << " | Total = " << total
+         << " | Average = " << average
+         << endl;
+
+    return 0;
+}
